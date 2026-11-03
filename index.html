@@ -47,13 +47,14 @@
 
   <section class="panel result">
     <div class="score-row">
-      <div class="score" id="score"><b>–</b><span>브랜드 적합도</span></div>
+      <div class="score" id="score"><b>–</b><span>종합 점수</span></div>
       <div class="counts" id="counts"></div>
       <div class="actions">
         <button id="btnJson" class="btn ghost small" disabled>JSON 내보내기</button>
         <button id="btnPrint" class="btn ghost small" disabled>리포트 인쇄·PDF</button>
       </div>
     </div>
+    <div id="top3" class="top3" hidden></div>
     <div class="res-grid">
     <div class="stage"><canvas id="cv"></canvas><div id="empty" class="empty">왼쪽에서 샘플을 고르거나 배너를 올려 주세요</div></div>
     <div class="res-list" id="resList">

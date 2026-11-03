@@ -74,3 +74,8 @@ textarea { resize: vertical; }
   .layout { display: block; padding: 0; } .panel { border: 0; } .res-grid { display: block; } .res-list { max-height: none; overflow: visible; } .stage { position: relative; }
   .issues li { break-inside: avoid; }
 }
+.verdict { font-size: 15px !important; }
+.top3 { margin-top: 14px; background: #fff7f7; border: 1px solid #f6d3d4; border-radius: 12px; padding: 10px 14px; display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; font-size: 14px; }
+.top3 b { color: var(--fail); }
+.top3 span { display: inline-flex; gap: 6px; align-items: center; }
+.top3 em { font-style: normal; font-size: 11px; font-weight: 700; background: var(--fail); color: #fff; border-radius: 8px; padding: 1px 7px; }
