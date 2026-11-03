@@ -1,0 +1,170 @@
+{
+  "id": "soop",
+  "name": "숲결",
+  "nameEn": "SOOPGYEOL",
+  "category": "비건 스킨케어 (가상 브랜드)",
+  "logo": "brands/soop-logo.png",
+  "logoClearSpace": 0.5,
+  "palette": [
+    {
+      "name": "포레스트",
+      "hex": "#1F4D3A"
+    },
+    {
+      "name": "세이지",
+      "hex": "#A7C4A0"
+    },
+    {
+      "name": "크림",
+      "hex": "#F4EFE6"
+    },
+    {
+      "name": "클레이",
+      "hex": "#C9774B"
+    },
+    {
+      "name": "화이트",
+      "hex": "#FFFFFF"
+    }
+  ],
+  "paletteMaxDeltaE": 20,
+  "minContrast": 4.5,
+  "minContrastLarge": 3,
+  "tone": {
+    "description": "차분하고 정직한 존댓말. 과장·재촉 없이 성분과 사용감을 있는 그대로 말한다.",
+    "onBrand": [
+      "피부가 쉬어 가는 시간, 순한 성분만 담았습니다.",
+      "매일 쓰는 것이니까, 덜어 낼수록 좋다고 생각했어요.",
+      "자극을 줄인 약산성 포뮬러로 하루를 편안하게 마무리하세요.",
+      "식물에서 얻은 보습 성분이 피부 결을 부드럽게 정돈합니다.",
+      "작은 습관이 쌓여 건강한 피부가 됩니다.",
+      "리필 파우치로 플라스틱 사용을 줄였습니다.",
+      "향을 더하지 않아 민감한 날에도 부담 없이 쓸 수 있어요.",
+      "가볍게 스며들어 끈적임 없이 촉촉함이 남습니다.",
+      "숲의 공기처럼 맑고 담백한 사용감을 전합니다.",
+      "천천히, 꾸준히. 피부에게도 쉼이 필요하니까요."
+    ],
+    "offBrand": [
+      "역대급 초특가!!! 지금 안 사면 무조건 손해!",
+      "단 하루! 오늘만 이 가격, 서두르세요!!",
+      "바르는 순간 피부가 완전히 새로 태어납니다!",
+      "대박 효과 보장, 써 보면 깜짝 놀랄 걸?",
+      "품절 임박! 재고 소진 시 종료! 놓치면 후회!",
+      "1등 크림, 이거 하나면 다른 거 다 필요 없음",
+      "미친 촉촉함ㅋㅋ 인생템 등극 확정",
+      "피부과 안 가도 됩니다, 이걸로 끝!",
+      "광채 폭발! 연예인 피부 3일 만에 완성!",
+      "지금 바로 클릭! 선착순 100명 한정 증정!"
+    ]
+  },
+  "banned": [
+    {
+      "word": "최고",
+      "type": "배타적 절대 표현",
+      "basis": "브랜드 가이드(절대 표현 자제)",
+      "suggest": "꾸준히 사랑받는"
+    },
+    {
+      "word": "최상",
+      "type": "배타적 절대 표현",
+      "basis": "브랜드 가이드(절대 표현 자제)",
+      "suggest": "정성껏 고른"
+    },
+    {
+      "word": "1등",
+      "type": "배타적 절대 표현",
+      "basis": "브랜드 가이드(절대 표현 자제)",
+      "suggest": "많은 분이 찾는"
+    },
+    {
+      "word": "완벽",
+      "type": "배타적 절대 표현",
+      "basis": "브랜드 가이드(절대 표현 자제)",
+      "suggest": "꼼꼼한"
+    },
+    {
+      "word": "치료",
+      "type": "의약품 오인 표현",
+      "basis": "화장품법 제13조(의약품 오인 표시·광고)",
+      "suggest": "케어"
+    },
+    {
+      "word": "재생",
+      "type": "의약품 오인 표현",
+      "basis": "화장품법 제13조(의약품 오인 표시·광고)",
+      "suggest": "피부 결 정돈"
+    },
+    {
+      "word": "여드름",
+      "type": "의약품 오인 표현",
+      "basis": "식약처 화장품 표시·광고 금지 표현 예",
+      "suggest": "피지 케어"
+    },
+    {
+      "word": "아토피",
+      "type": "의약품 오인 표현",
+      "basis": "식약처 화장품 표시·광고 금지 표현 예",
+      "suggest": "건조한 피부"
+    },
+    {
+      "word": "100%",
+      "type": "근거 없는 단정",
+      "basis": "브랜드 가이드",
+      "suggest": "(수치 근거를 함께 표기)"
+    },
+    {
+      "word": "무조건",
+      "type": "브랜드 금칙어",
+      "basis": "브랜드 가이드",
+      "suggest": ""
+    },
+    {
+      "word": "대박",
+      "type": "브랜드 금칙어",
+      "basis": "브랜드 가이드",
+      "suggest": ""
+    },
+    {
+      "word": "초특가",
+      "type": "브랜드 금칙어",
+      "basis": "브랜드 가이드",
+      "suggest": "특별가"
+    }
+  ],
+  "channels": {
+    "instagram": {
+      "label": "인스타그램 피드 1080×1080",
+      "w": 1080,
+      "h": 1080,
+      "headlineMax": 24,
+      "minTextPx": 26
+    },
+    "story": {
+      "label": "스토리 1080×1920",
+      "w": 1080,
+      "h": 1920,
+      "headlineMax": 18,
+      "minTextPx": 30
+    },
+    "web": {
+      "label": "웹 배너 1200×628",
+      "w": 1200,
+      "h": 628,
+      "headlineMax": 30,
+      "minTextPx": 20
+    }
+  },
+  "logoMinWidth": 0.12,
+  "mood": {
+    "on": [
+      "a calm minimal skincare advertisement with soft natural green and cream colors",
+      "a clean eco-friendly cosmetic product photo with plants and gentle light",
+      "a simple elegant banner with lots of white space and muted earthy tones"
+    ],
+    "off": [
+      "a loud flashy discount sale banner with neon pink and red colors",
+      "a cluttered advertisement with big bold sale text and exclamation marks",
+      "a garish promotional poster with too many colors and crowded layout"
+    ]
+  }
+}

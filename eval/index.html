@@ -1,0 +1,24 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>가드레일 톤 검증</title>
+<style>body{font-family:Pretendard,'Noto Sans CJK KR',sans-serif;margin:24px;color:#161a23;background:#fff}table{border-collapse:collapse;font-size:13px}td,th{border:1px solid #ddd;padding:4px 8px}.x{color:#e5484d;font-weight:700}</style></head>
+<body><h1>톤 분류 검증 (예문에 없는 새 문장 60개)</h1><p id="st">모델 불러오는 중…</p><div id="out"></div>
+<script type="module">
+import { toneVerdict } from '../lint.js';
+const { pipeline } = await import('https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.7.1');
+const ext = await pipeline('feature-extraction', 'Xenova/multilingual-e5-small', { dtype: 'q8' });
+const emb = async t => (await ext(t.map(s => 'query: ' + s), { pooling: 'mean', normalize: true })).tolist();
+const set = await (await fetch('tone-testset.json')).json();
+const res = {}; let html = '';
+for (const id of ['soop', 'moa']) {
+  const b = await (await fetch(`../brands/${id}.json`)).json();
+  const on = await emb(b.tone.onBrand), off = await emb(b.tone.offBrand);
+  const rows = [...set[id].on.map(t => [t, 1]), ...set[id].off.map(t => [t, 0])];
+  const v = await emb(rows.map(r => r[0]));
+  let ok = 0; const det = [];
+  rows.forEach(([t, y], i) => { const r = toneVerdict(v[i], on, off, b); const p = r.score >= 50 ? 1 : 0; ok += p === y; det.push([t, y, r.score, p === y]); });
+  res[id] = { n: rows.length, acc: ok / rows.length, det };
+  html += `<h2>${b.name}: 정확도 ${(ok / rows.length * 100).toFixed(1)}% (${ok}/${rows.length})</h2><table><tr><th>문장</th><th>정답</th><th>점수</th></tr>` +
+    det.map(([t, y, s, c]) => `<tr><td>${t}</td><td>${y ? '브랜드 톤' : '금지 톤'}</td><td class="${c ? '' : 'x'}">${s}</td></tr>`).join('') + '</table>';
+}
+document.getElementById('out').innerHTML = html; document.getElementById('st').textContent = '판정 기준: 점수 50 이상이면 브랜드 톤';
+window.__eval = res;
+</script></body></html>

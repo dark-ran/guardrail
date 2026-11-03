@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>가드레일 — AI 브랜드 검수 린터</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:,">
+</head>
+<body>
+<header class="top">
+  <div class="brandmark"><span class="dot"></span>가드레일 <small>Guardrail · AI 브랜드 검수 린터</small></div>
+  <div class="privacy">🔒 이미지·카피는 서버로 보내지 않고 이 브라우저 안에서만 분석합니다</div>
+</header>
+
+<main class="layout">
+  <section class="panel input">
+    <h2>1. 브랜드 가이드</h2>
+    <div class="row">
+      <select id="brandSel">
+        <option value="soop">숲결 — 비건 스킨케어 (예시)</option>
+        <option value="moa">모아핀 — 청년 금융앱 (예시)</option>
+      </select>
+    </div>
+    <div class="row" style="margin-top:8px">
+      <button id="guideDl" class="btn ghost small">가이드 양식 받기</button>
+      <label class="btn ghost small">우리 브랜드 가이드 불러오기<input type="file" id="guideFile" accept=".json" hidden></label>
+    </div>
+    <div id="guideCard" class="guide"></div>
+
+    <h2>2. 검수할 소재</h2>
+    <div class="row">
+      <select id="chanSel"></select>
+    </div>
+    <div class="samples" id="samples"></div>
+    <label class="drop" id="drop">
+      <input type="file" id="imgFile" accept="image/*" hidden>
+      <span>배너 이미지를 끌어 놓거나 눌러서 선택</span>
+    </label>
+    <label class="lbl" for="copy">함께 집행할 카피(선택, 줄마다 한 문장)</label>
+    <textarea id="copy" rows="3" placeholder="예) 피부가 쉬어 가는 시간, 순한 성분만 담았습니다."></textarea>
+    <button id="runBtn" class="btn primary" disabled>검수 시작</button>
+    <div id="status" class="status">AI 모델 준비 중…</div>
+    <div class="progress"><div id="bar"></div></div>
+  </section>
+
+  <section class="panel result">
+    <div class="score-row">
+      <div class="score" id="score"><b>–</b><span>브랜드 적합도</span></div>
+      <div class="counts" id="counts"></div>
+      <div class="actions">
+        <button id="btnJson" class="btn ghost small" disabled>JSON 내보내기</button>
+        <button id="btnPrint" class="btn ghost small" disabled>리포트 인쇄·PDF</button>
+      </div>
+    </div>
+    <div class="res-grid">
+    <div class="stage"><canvas id="cv"></canvas><div id="empty" class="empty">왼쪽에서 샘플을 고르거나 배너를 올려 주세요</div></div>
+    <div class="res-list" id="resList">
+    <div class="tabs">
+      <button data-f="all" class="on">전체</button><button data-f="fail">위반</button><button data-f="warn">주의</button><button data-f="pass">통과</button>
+    </div>
+    <ol id="issues" class="issues"></ol>
+    <div id="fixBox" class="fix" hidden>
+      <h3>수정 카피 제안</h3>
+      <div id="fixes"></div>
+    </div>
+    </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  AI 모델(모두 브라우저에서 실행): 문자 인식 Tesseract LSTM(kor+eng) · 문장 임베딩 multilingual-e5-small · 이미지-텍스트 임베딩 CLIP ViT-B/32.
+  분석 알고리즘: k-means 색 군집 · Lab 색차 · WCAG 대비 · 로고 템플릿 정규상관 · 한글 자모 근사 매칭.
+  첫 방문 시 핵심 모델(약 130MB)과 시각 무드 모델(약 150MB, 백그라운드)을 내려받고 이후에는 브라우저에 저장됩니다. 규칙 세트는 예시이며 법률 자문을 대신하지 않습니다. <a href="eval/">톤 판정 검증 페이지</a>
+</footer>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>
