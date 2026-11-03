@@ -5,8 +5,8 @@ const TESS_URL = 'https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract
 const EMB_MODEL = 'Xenova/multilingual-e5-small';
 const CLIP_MODEL = 'Xenova/clip-vit-base-patch32';
 const SAMPLES = {
-  soop: [['samples/soop-good.png', '정상 배너'], ['samples/soop-bad.png', '위반 배너']],
-  moa: [['samples/moa-good.png', '정상 배너'], ['samples/moa-bad.png', '위반 배너']],
+  soop: [['samples/soop-good.png', '정상 배너', 'instagram'], ['samples/soop-bad.png', '위반 배너', 'instagram'], ['samples/soop-photo.png', '사진 배너', 'web']],
+  moa: [['samples/moa-good.png', '정상 배너', 'web'], ['samples/moa-bad.png', '위반 배너', 'web'], ['samples/moa-photo.png', '사진 배너', 'instagram']],
 };
 const SAMPLE_CHAN = { soop: 'instagram', moa: 'web' };
 
@@ -68,9 +68,10 @@ async function setBrand(b) {
     금칙·규제어 ${b.banned.length}개 · 톤 예문 ${b.tone.onBrand.length + b.tone.offBrand.length}개 · 로고 여백 높이×${b.logoClearSpace}`;
   $('chanSel').innerHTML = Object.entries(b.channels).map(([k, c]) => `<option value="${k}">${c.label}</option>`).join('');
   $('chanSel').value = SAMPLE_CHAN[b.id] || 'instagram';
-  $('samples').innerHTML = (SAMPLES[b.id] || []).map(([src, label]) => `<button data-src="${src}"><img src="${src}" alt="">${label}</button>`).join('');
+  $('samples').innerHTML = (SAMPLES[b.id] || []).map(([src, label, ch]) => `<button data-src="${src}" data-ch="${ch}"><img src="${src}" alt="">${label}</button>`).join('');
   $('samples').querySelectorAll('button').forEach(btn => btn.onclick = () => {
     $('samples').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === btn));
+    if (b.channels[btn.dataset.ch]) $('chanSel').value = btn.dataset.ch;
     setImage(btn.dataset.src);
   });
   await prepBrandVecs();
@@ -182,6 +183,7 @@ async function run() {
       if (u.text.replace(/\s/g, '').length < 6) return;
       const v = toneVerdict(vecs[i], S.brandVecs.on, S.brandVecs.off, b);
       tone.push({ ...u, ...v });
+      if (v.score < 40) ban.fixes.push({ from: u.text, to: v.nearOn, tone: true });
       if (v.score < 40) issues.push({ sev: 'fail', cat: '톤', ai: '문장 임베딩', box: u.box, title: `브랜드 톤과 어긋남(${v.score}점) — “${u.text}”`, desc: `금지 톤 예문 “${v.nearOff}”과 가깝습니다. 참고할 브랜드 문장: “${v.nearOn}”` });
       else if (v.score < 47) issues.push({ sev: 'warn', cat: '톤', ai: '문장 임베딩', box: u.box, title: `톤 확인 필요(${v.score}점) — “${u.text}”`, desc: `참고할 브랜드 문장: “${v.nearOn}”` });
     });
@@ -218,7 +220,7 @@ function render() {
     <div class="d">${esc(x.desc || '')}</div>${x.ai ? `<div class="ai">${x.ai.startsWith('분석') || x.ai === '규칙' ? '' : x.ai.includes('AI 모델') ? '' : 'AI·분석: '}${x.ai}</div>` : ''}</li>`).join('');
   $('issues').querySelectorAll('li').forEach(li => li.onclick = () => { S.sel = +li.dataset.i === S.sel ? -1 : +li.dataset.i; render(); });
   $('fixBox').hidden = !r.fixes.length;
-  $('fixes').innerHTML = r.fixes.map(f => `<div class="pair"><del>${esc(f.from)}</del><br><ins>${esc(f.to) || '(문장 삭제 권장)'}</ins></div>`).join('');
+  $('fixes').innerHTML = r.fixes.map(f => `<div class="pair"><del>${esc(f.from)}</del><br>${f.tone ? '<span class="tone">톤 참고(가장 가까운 브랜드 예문)</span><br>' : ''}<ins>${esc(f.to) || '(문장 삭제 권장)'}</ins></div>`).join('');
   $('btnJson').disabled = $('btnPrint').disabled = false;
   draw();
 }
